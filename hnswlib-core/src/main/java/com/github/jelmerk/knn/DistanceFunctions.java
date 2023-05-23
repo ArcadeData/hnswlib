@@ -34,7 +34,7 @@ public final class DistanceFunctions {
                 } else if (uIndices[i] > vIndices[j]) {
                     j += 1;
                 } else {
-                    dot += uValues[i] * vValues[j];
+                    dot = Math.fma(uValues[i], vValues[j], dot);
                     i += 1;
                     j += 1;
                 }
@@ -72,7 +72,7 @@ public final class DistanceFunctions {
                 } else if (uIndices[i] > vIndices[j]) {
                     j += 1;
                 } else {
-                    dot += uValues[i] * vValues[j];
+                    dot = Math.fma(uValues[i], vValues[j], dot);
                     i += 1;
                     j += 1;
                 }
@@ -102,9 +102,9 @@ public final class DistanceFunctions {
             float nru = 0.0f;
             float nrv = 0.0f;
             for (int i = 0; i < u.length; i++) {
-                dot += u[i] * v[i];
-                nru += u[i] * u[i];
-                nrv += v[i] * v[i];
+                dot = Math.fma(u[i], v[i], dot);
+                nru = Math.fma(u[i], u[i], nru);
+                nrv = Math.fma(v[i], v[i], nrv);
             }
 
             float similarity = dot / (float)(Math.sqrt(nru) * Math.sqrt(nrv));
@@ -131,7 +131,7 @@ public final class DistanceFunctions {
         public Float distance(float[] u, float[] v) {
             float dot = 0.0f;
             for (int i = 0; i < u.length; i++) {
-                dot += u[i] * v[i];
+                dot = Math.fma(u[i], v[i], dot);
             }
 
             return 1.0f - dot;
@@ -158,7 +158,7 @@ public final class DistanceFunctions {
             float sum = 0.0f;
             for (int i = 0; i < u.length; i++) {
                 float dp = u[i] - v[i];
-                sum += dp * dp;
+                sum = Math.fma(dp, dp, sum);
             }
             return (float) Math.sqrt(sum);
         }
@@ -253,7 +253,7 @@ public final class DistanceFunctions {
             float den1 = 0.0f;
             float den2 = 0.0f;
             for (int i = 0; i < u.length; i++) {
-                num += (u[i] + x) * (v[i] + y);
+                num = Math.fma(u[i] + x, v[i] + y, num);
 
                 den1 += Math.abs(Math.pow(u[i] + x, 2));
                 den2 += Math.abs(Math.pow(v[i] + x, 2));
@@ -307,7 +307,7 @@ public final class DistanceFunctions {
         public Float distance(float[] u, float[] v) {
             float max = 0.0f;
             for (int i = 0; i < u.length; i++) {
-                max = Math.max(max,Math.abs(u[i] - v[i]));
+                max = Math.max(max, Math.abs(u[i] - v[i]));
             }
             return max;
         }
@@ -334,9 +334,9 @@ public final class DistanceFunctions {
             double nru = 0.0;
             double nrv = 0.0;
             for (int i = 0; i < u.length; i++) {
-                dot += u[i] * v[i];
-                nru += u[i] * u[i];
-                nrv += v[i] * v[i];
+                dot = Math.fma(u[i], v[i], dot);
+                nru = Math.fma(u[i], u[i], nru);
+                nrv = Math.fma(v[i], v[i], nrv);
             }
 
             double similarity = dot / (Math.sqrt(nru) * Math.sqrt(nrv));
@@ -363,7 +363,7 @@ public final class DistanceFunctions {
         public Double distance(double[] u, double[] v) {
             double dot = 0.0;
             for (int i = 0; i < u.length; i++) {
-                dot += u[i] * v[i];
+                dot = Math.fma(u[i], v[i], dot);
             }
 
             return 1.0 - dot;
@@ -390,7 +390,7 @@ public final class DistanceFunctions {
             double sum = 0.0;
             for (int i = 0; i < u.length; i++) {
                 double dp = u[i] - v[i];
-                sum += dp * dp;
+                sum = Math.fma(dp, dp, sum);
             }
             return Math.sqrt(sum);
         }
@@ -485,7 +485,7 @@ public final class DistanceFunctions {
             double den1 = 0.0;
             double den2 = 0.0;
             for (int i = 0; i < u.length; i++) {
-                num += (u[i] + x) * (v[i] + y);
+                num = Math.fma(u[i] + x, v[i] + y, num);
 
                 den1 += Math.abs(Math.pow(u[i] + x, 2));
                 den2 += Math.abs(Math.pow(v[i] + x, 2));
@@ -539,7 +539,7 @@ public final class DistanceFunctions {
         public Double distance(double[] u, double[] v) {
             double max = 0.0;
             for (int i = 0; i < u.length; i++) {
-                max = Math.max(max,Math.abs(u[i] - v[i]));
+                max = Math.max(max, Math.abs(u[i] - v[i]));
             }
             return max;
         }
