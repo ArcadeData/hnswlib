@@ -39,7 +39,7 @@ public final class DistanceFunctions {
                     j += 1;
                 }
             }
-            return 1 - dot;
+            return 1.0f - dot;
         }
     }
 
@@ -62,7 +62,7 @@ public final class DistanceFunctions {
             double[] uValues = u.values();
             int[] vIndices = v.indices();
             double[] vValues = v.values();
-            double dot = 0.0f;
+            double dot = 0.0;
             int i = 0;
             int j = 0;
 
@@ -77,7 +77,7 @@ public final class DistanceFunctions {
                     j += 1;
                 }
             }
-            return 1 - dot;
+            return 1.0 - dot;
         }
     }
 
@@ -108,7 +108,7 @@ public final class DistanceFunctions {
             }
 
             float similarity = dot / (float)(Math.sqrt(nru) * Math.sqrt(nrv));
-            return 1 - similarity;
+            return 1.0f - similarity;
         }
     }
 
@@ -129,12 +129,12 @@ public final class DistanceFunctions {
          */
         @Override
         public Float distance(float[] u, float[] v) {
-            float dot = 0;
+            float dot = 0.0f;
             for (int i = 0; i < u.length; i++) {
                 dot += u[i] * v[i];
             }
 
-            return 1 - dot;
+            return 1.0f - dot;
         }
     }
 
@@ -155,7 +155,7 @@ public final class DistanceFunctions {
          */
         @Override
         public Float distance(float[] u, float[] v) {
-            float sum = 0;
+            float sum = 0.0f;
             for (int i = 0; i < u.length; i++) {
                 float dp = u[i] - v[i];
                 sum += dp * dp;
@@ -181,7 +181,7 @@ public final class DistanceFunctions {
          */
         @Override
         public Float distance(float[] u, float[] v) {
-            float sum = 0;
+            float sum = 0.0f;
             for (int i = 0; i < u.length; i++) {
                 float num = Math.abs(u[i] - v[i]);
                 float denom = Math.abs(u[i]) + Math.abs(v[i]);
@@ -209,8 +209,8 @@ public final class DistanceFunctions {
         @Override
         public Float distance(float[] u, float[] v) {
 
-            float sump = 0;
-            float sumn = 0;
+            float sump = 0.0f;
+            float sumn = 0.0f;
 
             for (int i = 0; i < u.length; i++) {
                 sumn += Math.abs(u[i] - v[i]);
@@ -238,8 +238,8 @@ public final class DistanceFunctions {
          */
         @Override
         public Float distance(float[] u, float[] v) {
-            float x = 0;
-            float y = 0;
+            float x = 0.0f;
+            float y = 0.0f;
 
             for (int i = 0; i < u.length; i++) {
                 x += -u[i];
@@ -249,9 +249,9 @@ public final class DistanceFunctions {
             x /= u.length;
             y /= v.length;
 
-            float num = 0;
-            float den1 = 0;
-            float den2 = 0;
+            float num = 0.0f;
+            float den1 = 0.0f;
+            float den2 = 0.0f;
             for (int i = 0; i < u.length; i++) {
                 num += (u[i] + x) * (v[i] + y);
 
@@ -259,7 +259,7 @@ public final class DistanceFunctions {
                 den2 += Math.abs(Math.pow(v[i] + x, 2));
             }
 
-            return 1f - (num / ((float) Math.sqrt(den1) * (float) Math.sqrt(den2)));
+            return 1.0f - (num / ((float) Math.sqrt(den1) * (float) Math.sqrt(den2)));
         }
     }
 
@@ -280,7 +280,7 @@ public final class DistanceFunctions {
          */
         @Override
         public Float distance(float[] u, float[] v) {
-            float sum = 0;
+            float sum = 0.0f;
             for (int i = 0; i < u.length; i++) {
                 sum += Math.abs(u[i] - v[i]);
             }
@@ -305,7 +305,7 @@ public final class DistanceFunctions {
          */
         @Override
         public Float distance(float[] u, float[] v) {
-            float max = 0;
+            float max = 0.0f;
             for (int i = 0; i < u.length; i++) {
                 max = Math.max(max,Math.abs(u[i] - v[i]));
             }
@@ -330,9 +330,9 @@ public final class DistanceFunctions {
          */
         @Override
         public Double distance(double[] u, double[] v) {
-            double dot = 0.0f;
-            double nru = 0.0f;
-            double nrv = 0.0f;
+            double dot = 0.0;
+            double nru = 0.0;
+            double nrv = 0.0;
             for (int i = 0; i < u.length; i++) {
                 dot += u[i] * v[i];
                 nru += u[i] * u[i];
@@ -340,7 +340,7 @@ public final class DistanceFunctions {
             }
 
             double similarity = dot / (Math.sqrt(nru) * Math.sqrt(nrv));
-            return 1 - similarity;
+            return 1.0 - similarity;
         }
     }
 
@@ -361,12 +361,12 @@ public final class DistanceFunctions {
          */
         @Override
         public Double distance(double[] u, double[] v) {
-            double dot = 0;
+            double dot = 0.0;
             for (int i = 0; i < u.length; i++) {
                 dot += u[i] * v[i];
             }
 
-            return 1 - dot;
+            return 1.0 - dot;
         }
     }
 
@@ -387,7 +387,7 @@ public final class DistanceFunctions {
          */
         @Override
         public Double distance(double[] u, double[] v) {
-            double sum = 0;
+            double sum = 0.0;
             for (int i = 0; i < u.length; i++) {
                 double dp = u[i] - v[i];
                 sum += dp * dp;
@@ -413,7 +413,7 @@ public final class DistanceFunctions {
          */
         @Override
         public Double distance(double[] u, double[] v) {
-            double sum = 0;
+            double sum = 0.0;
             for (int i = 0; i < u.length; i++) {
                 double num = Math.abs(u[i] - v[i]);
                 double denom = Math.abs(u[i]) + Math.abs(v[i]);
@@ -440,8 +440,8 @@ public final class DistanceFunctions {
          */
         @Override
         public Double distance(double[] u, double[] v) {
-            double sump = 0;
-            double sumn = 0;
+            double sump = 0.0;
+            double sumn = 0.0;
 
             for (int i = 0; i < u.length; i++) {
                 sumn += Math.abs(u[i] - v[i]);
@@ -470,8 +470,8 @@ public final class DistanceFunctions {
          */
         @Override
         public Double distance(double[] u, double[] v) {
-            double x = 0;
-            double y = 0;
+            double x = 0.0;
+            double y = 0.0;
 
             for (int i = 0; i < u.length; i++) {
                 x += -u[i];
@@ -481,9 +481,9 @@ public final class DistanceFunctions {
             x /= u.length;
             y /= v.length;
 
-            double num = 0;
-            double den1 = 0;
-            double den2 = 0;
+            double num = 0.0;
+            double den1 = 0.0;
+            double den2 = 0.0;
             for (int i = 0; i < u.length; i++) {
                 num += (u[i] + x) * (v[i] + y);
 
@@ -491,7 +491,7 @@ public final class DistanceFunctions {
                 den2 += Math.abs(Math.pow(v[i] + x, 2));
             }
 
-            return 1 - (num / (Math.sqrt(den1) * Math.sqrt(den2)));
+            return 1.0 - (num / (Math.sqrt(den1) * Math.sqrt(den2)));
         }
     }
 
@@ -512,7 +512,7 @@ public final class DistanceFunctions {
          */
         @Override
         public Double distance(double[] u, double[] v) {
-            double sum = 0;
+            double sum = 0.0;
             for (int i = 0; i < u.length; i++) {
                 sum += Math.abs(u[i] - v[i]);
             }
@@ -537,7 +537,7 @@ public final class DistanceFunctions {
          */
         @Override
         public Double distance(double[] u, double[] v) {
-            double max = 0;
+            double max = 0.0;
             for (int i = 0; i < u.length; i++) {
                 max = Math.max(max,Math.abs(u[i] - v[i]));
             }
