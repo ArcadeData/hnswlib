@@ -19,6 +19,7 @@ The following distance metrics are currently pre-packaged :
 - euclidean distance
 - inner product
 - manhattan distance
+- chebyshev distance
 
 It comes with [spark integration](https://github.com/jelmerk/hnswlib/tree/master/hnswlib-spark), [pyspark integration](https://github.com/jelmerk/hnswlib/tree/master/hnswlib-pyspark) and a [scala wrapper](https://github.com/jelmerk/hnswlib/tree/master/hnswlib-scala)  that should feel native to scala developers 
 
