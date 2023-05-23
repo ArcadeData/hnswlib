@@ -62,6 +62,11 @@ class DistanceFunctionsTest {
     }
 
     @Test
+    void floatChebyshevDistance() {
+        assertThat((double) DistanceFunctions.FLOAT_CHEBYSHEV_DISTANCE.distance(floatVector1, floatVector2), closeTo(0.02, error));
+    }
+
+    @Test
     void doubleSparseVectorInnerProduct() {
         assertThat(DistanceFunctions.DOUBLE_SPARSE_VECTOR_INNER_PRODUCT.distance(sparseDoubleVector1, sparseDoubleVector2), closeTo(0.999, error));
     }
@@ -99,5 +104,10 @@ class DistanceFunctionsTest {
     @Test
     void doubleManhattanDistance() {
         assertThat(DistanceFunctions.DOUBLE_MANHATTAN_DISTANCE.distance(doubleVector1, doubleVector2), closeTo(0.04, error));
+    }
+
+    @Test
+    void doubleChebyshevDistance() {
+        assertThat(DistanceFunctions.DOUBLE_CHEBYSHEV_DISTANCE.distance(doubleVector1, doubleVector2), closeTo(0.02, error));
     }
 }

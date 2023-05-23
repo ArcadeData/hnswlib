@@ -289,6 +289,31 @@ public final class DistanceFunctions {
     }
 
     /**
+     * Implementation of {@link DistanceFunction} that calculates the chebyshev distance.
+     */
+    static class FloatChebyshevDistance implements DistanceFunction<float[], Float> {
+
+        private static final long serialVersionUID = 1L;
+
+        /**
+         * Calculates the chebyshev distance.
+         *
+         * @param u Left vector.
+         * @param v Right vector.
+         *
+         * @return Chebyshev distance between u and v.
+         */
+        @Override
+        public Float distance(float[] u, float[] v) {
+            float max = 0;
+            for (int i = 0; i < u.length; i++) {
+                max = Math.max(max,Math.abs(u[i] - v[i]));
+            }
+            return max;
+        }
+    }
+
+    /**
      * Implementation of {@link DistanceFunction} that calculates the cosine distance.
      */
     static class DoubleCosineDistance implements DistanceFunction<double[], Double> {
@@ -495,6 +520,31 @@ public final class DistanceFunctions {
         }
     }
 
+    /**
+     * Implementation of {@link DistanceFunction} that calculates the chebyshev distance.
+     */
+    static class DoubleChebyshevDistance implements DistanceFunction<double[], Double> {
+
+        private static final long serialVersionUID = 1L;
+
+        /**
+         * Calculates the chebyshev distance.
+         *
+         * @param u Left vector.
+         * @param v Right vector.
+         *
+         * @return Chebyshev distance between u and v.
+         */
+        @Override
+        public Double distance(double[] u, double[] v) {
+            double max = 0;
+            for (int i = 0; i < u.length; i++) {
+                max = Math.max(max,Math.abs(u[i] - v[i]));
+            }
+            return max;
+        }
+    }
+
     private DistanceFunctions() {
     }
 
@@ -534,6 +584,11 @@ public final class DistanceFunctions {
     public static final DistanceFunction<float[], Float> FLOAT_MANHATTAN_DISTANCE = new FloatManhattanDistance();
 
     /**
+     * Calculates the chebyshev distance.
+     */
+    public static final DistanceFunction<float[], Float> FLOAT_CHEBYSHEV_DISTANCE = new FloatChebyshevDistance();
+
+    /**
      * Calculates the cosine distance.
      */
     public static final DistanceFunction<double[], Double> DOUBLE_COSINE_DISTANCE = new DoubleCosineDistance();
@@ -567,6 +622,11 @@ public final class DistanceFunctions {
      * Calculates the manhattan distance.
      */
     public static final DistanceFunction<double[], Double> DOUBLE_MANHATTAN_DISTANCE = new DoubleManhattanDistance();
+
+    /**
+     * Calculates the chebyshev distance.
+     */
+    public static final DistanceFunction<double[], Double> DOUBLE_CHEBYSHEV_DISTANCE = new DoubleChebyshevDistance();
 
     /**
      * Calculates the inner product.
