@@ -109,7 +109,7 @@ class BruteForceIndexTest {
         assertThat(nearest, is(Arrays.asList(
             new SearchResult<>(item1, 0f, Comparator.naturalOrder()),
             new SearchResult<>(item3, 0.06521261f, Comparator.naturalOrder()),
-            new SearchResult<>(item2, 0.11621308f, Comparator.naturalOrder())
+            new SearchResult<>(item2, 0.11621314f, Comparator.naturalOrder())
         )));
     }
 
@@ -121,7 +121,7 @@ class BruteForceIndexTest {
 
         assertThat(nearest, is(Arrays.asList(
                 new SearchResult<>(item3, 0.06521261f, Comparator.naturalOrder()),
-                new SearchResult<>(item2, 0.11621308f, Comparator.naturalOrder())
+                new SearchResult<>(item2, 0.11621314f, Comparator.naturalOrder())
         )));
     }
 

@@ -173,7 +173,7 @@ class HnswIndexTest {
         assertThat(nearest, is(Arrays.asList(
                 SearchResult.create(item1, 0f),
                 SearchResult.create(item3, 0.06521261f),
-                SearchResult.create(item2, 0.11621308f)
+                SearchResult.create(item2, 0.11621314f)
         )));
     }
 
@@ -185,7 +185,7 @@ class HnswIndexTest {
 
         assertThat(nearest, is(Arrays.asList(
                 SearchResult.create(item3, 0.06521261f),
-                SearchResult.create(item2, 0.11621308f)
+                SearchResult.create(item2, 0.11621314f)
         )));
     }
 

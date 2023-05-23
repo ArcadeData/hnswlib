@@ -34,12 +34,12 @@ public final class DistanceFunctions {
                 } else if (uIndices[i] > vIndices[j]) {
                     j += 1;
                 } else {
-                    dot += uValues[i] * vValues[j];
+                    dot = Math.fma(uValues[i], vValues[j], dot);
                     i += 1;
                     j += 1;
                 }
             }
-            return 1 - dot;
+            return 1.0f - dot;
         }
     }
 
@@ -62,7 +62,7 @@ public final class DistanceFunctions {
             double[] uValues = u.values();
             int[] vIndices = v.indices();
             double[] vValues = v.values();
-            double dot = 0.0f;
+            double dot = 0.0;
             int i = 0;
             int j = 0;
 
@@ -72,12 +72,12 @@ public final class DistanceFunctions {
                 } else if (uIndices[i] > vIndices[j]) {
                     j += 1;
                 } else {
-                    dot += uValues[i] * vValues[j];
+                    dot = Math.fma(uValues[i], vValues[j], dot);
                     i += 1;
                     j += 1;
                 }
             }
-            return 1 - dot;
+            return 1.0 - dot;
         }
     }
 
@@ -102,13 +102,13 @@ public final class DistanceFunctions {
             float nru = 0.0f;
             float nrv = 0.0f;
             for (int i = 0; i < u.length; i++) {
-                dot += u[i] * v[i];
-                nru += u[i] * u[i];
-                nrv += v[i] * v[i];
+                dot = Math.fma(u[i], v[i], dot);
+                nru = Math.fma(u[i], u[i], nru);
+                nrv = Math.fma(v[i], v[i], nrv);
             }
 
             float similarity = dot / (float)(Math.sqrt(nru) * Math.sqrt(nrv));
-            return 1 - similarity;
+            return 1.0f - similarity;
         }
     }
 
@@ -129,12 +129,12 @@ public final class DistanceFunctions {
          */
         @Override
         public Float distance(float[] u, float[] v) {
-            float dot = 0;
+            float dot = 0.0f;
             for (int i = 0; i < u.length; i++) {
-                dot += u[i] * v[i];
+                dot = Math.fma(u[i], v[i], dot);
             }
 
-            return 1 - dot;
+            return 1.0f - dot;
         }
     }
 
@@ -155,10 +155,10 @@ public final class DistanceFunctions {
          */
         @Override
         public Float distance(float[] u, float[] v) {
-            float sum = 0;
+            float sum = 0.0f;
             for (int i = 0; i < u.length; i++) {
                 float dp = u[i] - v[i];
-                sum += dp * dp;
+                sum = Math.fma(dp, dp, sum);
             }
             return (float) Math.sqrt(sum);
         }
@@ -181,7 +181,7 @@ public final class DistanceFunctions {
          */
         @Override
         public Float distance(float[] u, float[] v) {
-            float sum = 0;
+            float sum = 0.0f;
             for (int i = 0; i < u.length; i++) {
                 float num = Math.abs(u[i] - v[i]);
                 float denom = Math.abs(u[i]) + Math.abs(v[i]);
@@ -209,8 +209,8 @@ public final class DistanceFunctions {
         @Override
         public Float distance(float[] u, float[] v) {
 
-            float sump = 0;
-            float sumn = 0;
+            float sump = 0.0f;
+            float sumn = 0.0f;
 
             for (int i = 0; i < u.length; i++) {
                 sumn += Math.abs(u[i] - v[i]);
@@ -238,8 +238,8 @@ public final class DistanceFunctions {
          */
         @Override
         public Float distance(float[] u, float[] v) {
-            float x = 0;
-            float y = 0;
+            float x = 0.0f;
+            float y = 0.0f;
 
             for (int i = 0; i < u.length; i++) {
                 x += -u[i];
@@ -249,17 +249,17 @@ public final class DistanceFunctions {
             x /= u.length;
             y /= v.length;
 
-            float num = 0;
-            float den1 = 0;
-            float den2 = 0;
+            float num = 0.0f;
+            float den1 = 0.0f;
+            float den2 = 0.0f;
             for (int i = 0; i < u.length; i++) {
-                num += (u[i] + x) * (v[i] + y);
+                num = Math.fma(u[i] + x, v[i] + y, num);
 
                 den1 += Math.abs(Math.pow(u[i] + x, 2));
                 den2 += Math.abs(Math.pow(v[i] + x, 2));
             }
 
-            return 1f - (num / ((float) Math.sqrt(den1) * (float) Math.sqrt(den2)));
+            return 1.0f - (num / ((float) Math.sqrt(den1) * (float) Math.sqrt(den2)));
         }
     }
 
@@ -280,11 +280,36 @@ public final class DistanceFunctions {
          */
         @Override
         public Float distance(float[] u, float[] v) {
-            float sum = 0;
+            float sum = 0.0f;
             for (int i = 0; i < u.length; i++) {
                 sum += Math.abs(u[i] - v[i]);
             }
             return sum;
+        }
+    }
+
+    /**
+     * Implementation of {@link DistanceFunction} that calculates the chebyshev distance.
+     */
+    static class FloatChebyshevDistance implements DistanceFunction<float[], Float> {
+
+        private static final long serialVersionUID = 1L;
+
+        /**
+         * Calculates the chebyshev distance.
+         *
+         * @param u Left vector.
+         * @param v Right vector.
+         *
+         * @return Chebyshev distance between u and v.
+         */
+        @Override
+        public Float distance(float[] u, float[] v) {
+            float max = 0.0f;
+            for (int i = 0; i < u.length; i++) {
+                max = Math.max(max, Math.abs(u[i] - v[i]));
+            }
+            return max;
         }
     }
 
@@ -305,17 +330,17 @@ public final class DistanceFunctions {
          */
         @Override
         public Double distance(double[] u, double[] v) {
-            double dot = 0.0f;
-            double nru = 0.0f;
-            double nrv = 0.0f;
+            double dot = 0.0;
+            double nru = 0.0;
+            double nrv = 0.0;
             for (int i = 0; i < u.length; i++) {
-                dot += u[i] * v[i];
-                nru += u[i] * u[i];
-                nrv += v[i] * v[i];
+                dot = Math.fma(u[i], v[i], dot);
+                nru = Math.fma(u[i], u[i], nru);
+                nrv = Math.fma(v[i], v[i], nrv);
             }
 
             double similarity = dot / (Math.sqrt(nru) * Math.sqrt(nrv));
-            return 1 - similarity;
+            return 1.0 - similarity;
         }
     }
 
@@ -336,12 +361,12 @@ public final class DistanceFunctions {
          */
         @Override
         public Double distance(double[] u, double[] v) {
-            double dot = 0;
+            double dot = 0.0;
             for (int i = 0; i < u.length; i++) {
-                dot += u[i] * v[i];
+                dot = Math.fma(u[i], v[i], dot);
             }
 
-            return 1 - dot;
+            return 1.0 - dot;
         }
     }
 
@@ -362,10 +387,10 @@ public final class DistanceFunctions {
          */
         @Override
         public Double distance(double[] u, double[] v) {
-            double sum = 0;
+            double sum = 0.0;
             for (int i = 0; i < u.length; i++) {
                 double dp = u[i] - v[i];
-                sum += dp * dp;
+                sum = Math.fma(dp, dp, sum);
             }
             return Math.sqrt(sum);
         }
@@ -388,7 +413,7 @@ public final class DistanceFunctions {
          */
         @Override
         public Double distance(double[] u, double[] v) {
-            double sum = 0;
+            double sum = 0.0;
             for (int i = 0; i < u.length; i++) {
                 double num = Math.abs(u[i] - v[i]);
                 double denom = Math.abs(u[i]) + Math.abs(v[i]);
@@ -415,8 +440,8 @@ public final class DistanceFunctions {
          */
         @Override
         public Double distance(double[] u, double[] v) {
-            double sump = 0;
-            double sumn = 0;
+            double sump = 0.0;
+            double sumn = 0.0;
 
             for (int i = 0; i < u.length; i++) {
                 sumn += Math.abs(u[i] - v[i]);
@@ -445,8 +470,8 @@ public final class DistanceFunctions {
          */
         @Override
         public Double distance(double[] u, double[] v) {
-            double x = 0;
-            double y = 0;
+            double x = 0.0;
+            double y = 0.0;
 
             for (int i = 0; i < u.length; i++) {
                 x += -u[i];
@@ -456,17 +481,17 @@ public final class DistanceFunctions {
             x /= u.length;
             y /= v.length;
 
-            double num = 0;
-            double den1 = 0;
-            double den2 = 0;
+            double num = 0.0;
+            double den1 = 0.0;
+            double den2 = 0.0;
             for (int i = 0; i < u.length; i++) {
-                num += (u[i] + x) * (v[i] + y);
+                num = Math.fma(u[i] + x, v[i] + y, num);
 
                 den1 += Math.abs(Math.pow(u[i] + x, 2));
                 den2 += Math.abs(Math.pow(v[i] + x, 2));
             }
 
-            return 1 - (num / (Math.sqrt(den1) * Math.sqrt(den2)));
+            return 1.0 - (num / (Math.sqrt(den1) * Math.sqrt(den2)));
         }
     }
 
@@ -487,11 +512,36 @@ public final class DistanceFunctions {
          */
         @Override
         public Double distance(double[] u, double[] v) {
-            double sum = 0;
+            double sum = 0.0;
             for (int i = 0; i < u.length; i++) {
                 sum += Math.abs(u[i] - v[i]);
             }
             return sum;
+        }
+    }
+
+    /**
+     * Implementation of {@link DistanceFunction} that calculates the chebyshev distance.
+     */
+    static class DoubleChebyshevDistance implements DistanceFunction<double[], Double> {
+
+        private static final long serialVersionUID = 1L;
+
+        /**
+         * Calculates the chebyshev distance.
+         *
+         * @param u Left vector.
+         * @param v Right vector.
+         *
+         * @return Chebyshev distance between u and v.
+         */
+        @Override
+        public Double distance(double[] u, double[] v) {
+            double max = 0.0;
+            for (int i = 0; i < u.length; i++) {
+                max = Math.max(max, Math.abs(u[i] - v[i]));
+            }
+            return max;
         }
     }
 
@@ -534,6 +584,11 @@ public final class DistanceFunctions {
     public static final DistanceFunction<float[], Float> FLOAT_MANHATTAN_DISTANCE = new FloatManhattanDistance();
 
     /**
+     * Calculates the chebyshev distance.
+     */
+    public static final DistanceFunction<float[], Float> FLOAT_CHEBYSHEV_DISTANCE = new FloatChebyshevDistance();
+
+    /**
      * Calculates the cosine distance.
      */
     public static final DistanceFunction<double[], Double> DOUBLE_COSINE_DISTANCE = new DoubleCosineDistance();
@@ -567,6 +622,11 @@ public final class DistanceFunctions {
      * Calculates the manhattan distance.
      */
     public static final DistanceFunction<double[], Double> DOUBLE_MANHATTAN_DISTANCE = new DoubleManhattanDistance();
+
+    /**
+     * Calculates the chebyshev distance.
+     */
+    public static final DistanceFunction<double[], Double> DOUBLE_CHEBYSHEV_DISTANCE = new DoubleChebyshevDistance();
 
     /**
      * Calculates the inner product.

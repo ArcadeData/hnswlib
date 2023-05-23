@@ -12,13 +12,14 @@ It's flexible interface makes it easy to apply it to use it with any type of dat
  
 The following distance metrics are currently pre-packaged :
 
-- bray curtis dissimilarity
-- canberra distance
-- correlation distance
-- cosine distance
-- euclidean distance
-- inner product
-- manhattan distance
+- [bray curtis dissimilarity](https://en.wikipedia.org/wiki/Bray%E2%80%93Curtis_dissimilarity)
+- [canberra distance](https://en.wikipedia.org/wiki/Canberra_distance)
+- [correlation distance](https://en.wikipedia.org/wiki/Correlation)
+- [cosine distance](https://en.wikipedia.org/wiki/Cosine_similarity)
+- [euclidean distance](https://en.wikipedia.org/wiki/Euclidean_distance)
+- [inner product](https://en.wikipedia.org/wiki/Dot_product)
+- [manhattan distance](https://en.wikipedia.org/wiki/Taxicab_geometry)
+- [chebyshev distance](https://en.wikipedia.org/wiki/Chebyshev_distance)
 
 It comes with [spark integration](https://github.com/jelmerk/hnswlib/tree/master/hnswlib-spark), [pyspark integration](https://github.com/jelmerk/hnswlib/tree/master/hnswlib-pyspark) and a [scala wrapper](https://github.com/jelmerk/hnswlib/tree/master/hnswlib-scala)  that should feel native to scala developers 
 
